@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
 
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
     const navigate = useNavigate();
@@ -23,10 +23,11 @@ const Signup = () => {
         if (json.success) {
             // Save the auth token and redirect
             localStorage.setItem('token', json.authtoken);
+            props.showAlert("Account Created successfully", "success")
             navigate("/");
         }
         else {
-            alert("invalid");
+            props.showAlert("Invalid Credentials", "danger")
         }
 
     }
@@ -36,14 +37,15 @@ const Signup = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container mt-3">
+            <h2 className="mb-3">Sign In to continue With iNoteBook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="name" name='name' value={credentials.name} onChange={onChange} placeholder=""  required/>
+                    <input type="text" className="form-control" id="name" name='name' value={credentials.name} onChange={onChange} placeholder="" required />
                     <label htmlFor="name">Full Name</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="email" className="form-control" id="email" name='email' value={credentials.email} onChange={onChange} placeholder=""  required/>
+                    <input type="email" className="form-control" id="email" name='email' value={credentials.email} onChange={onChange} placeholder="" required />
                     <label htmlFor="email">Email address</label>
                 </div>
                 <div className="form-floating">
